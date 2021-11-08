@@ -1,3 +1,5 @@
+using HeartHealth.Application;
+using HeartHealth.Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace HeartHealth.API
@@ -29,6 +32,11 @@ namespace HeartHealth.API
         {
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddApplicationServices();
+            services.AddPersistenceService(Configuration);
+
             services.AddControllers();
         }
 
