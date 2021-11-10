@@ -9,6 +9,8 @@ namespace HeartHealth.Domain.ValueObjects
         public DateTime End { get; }
         public DateRange(DateTime start, DateTime end)
         {
+            if (start > end) throw new ArgumentException("End date cannot precede start date.");
+
             Start = Guard.Against.OutOfSQLDateRange(start, nameof(start));
             End = Guard.Against.OutOfSQLDateRange(end, nameof(end));
         }
@@ -25,6 +27,20 @@ namespace HeartHealth.Domain.ValueObjects
 
             return Start == other.Start && End == other.End;
         }
+
+        public static bool operator == (DateRange dateRange, DateRange otherDateRange)
+        {
+            if (dateRange is null && otherDateRange is null) return true;
+            if (dateRange is null || otherDateRange is null) return false;
+
+            return dateRange.Equals(otherDateRange);
+        }
+
+        public static bool operator != (DateRange dateRange, DateRange otherDateRange)
+        {
+            return !dateRange.Equals(otherDateRange);
+        }
+
         public override int GetHashCode()
         {
             unchecked

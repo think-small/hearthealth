@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartHealth.API", "HeartHealth.API\HeartHealth.API.csproj", "{951F9154-860B-4543-845A-33E93D54AA16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeartHealth.API", "HeartHealth.API\HeartHealth.API.csproj", "{951F9154-860B-4543-845A-33E93D54AA16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartHealth.Application", "HeartHealth.Application\HeartHealth.Application.csproj", "{7A3D69B7-2CE8-432E-9360-7B7D6505BD8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeartHealth.Application", "HeartHealth.Application\HeartHealth.Application.csproj", "{7A3D69B7-2CE8-432E-9360-7B7D6505BD8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartHealth.Domain", "HeartHealth.Domain\HeartHealth.Domain.csproj", "{2096D6C1-AA14-4D24-A8E1-5E2DDC9ACFE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeartHealth.Domain", "HeartHealth.Domain\HeartHealth.Domain.csproj", "{2096D6C1-AA14-4D24-A8E1-5E2DDC9ACFE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartHealth.Infrastructure", "HeartHealth.Infrastructure\HeartHealth.Infrastructure.csproj", "{DDB4DBDB-ABE3-4F81-8E42-69956874D7A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeartHealth.Infrastructure", "HeartHealth.Infrastructure\HeartHealth.Infrastructure.csproj", "{DDB4DBDB-ABE3-4F81-8E42-69956874D7A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeartHealth.Tests", "HeartHealth.Tests\HeartHealth.Tests.csproj", "{5A43DB5A-E7EC-4567-A2D9-CABF865F7585}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DDB4DBDB-ABE3-4F81-8E42-69956874D7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDB4DBDB-ABE3-4F81-8E42-69956874D7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDB4DBDB-ABE3-4F81-8E42-69956874D7A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A43DB5A-E7EC-4567-A2D9-CABF865F7585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A43DB5A-E7EC-4567-A2D9-CABF865F7585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A43DB5A-E7EC-4567-A2D9-CABF865F7585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A43DB5A-E7EC-4567-A2D9-CABF865F7585}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

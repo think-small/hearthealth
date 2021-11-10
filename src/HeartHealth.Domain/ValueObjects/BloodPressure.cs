@@ -23,6 +23,20 @@ namespace HeartHealth.Domain.ValueObjects
                    && Diastolic == other.Diastolic
                    && Units == other.Units;
         }
+
+        public static bool operator == (BloodPressure pressure, BloodPressure otherPressure)
+        {
+            if (pressure is null && otherPressure is null) return true;
+            if (pressure is null || otherPressure is null) return false;
+
+            return pressure.Equals(otherPressure);
+        }
+
+        public static bool operator != (BloodPressure pressure, BloodPressure otherPressure)
+        {
+            return !pressure.Equals(otherPressure);
+        }
+
         public override int GetHashCode()
         {
             unchecked
