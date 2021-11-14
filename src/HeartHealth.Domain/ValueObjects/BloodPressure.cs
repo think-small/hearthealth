@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using HeartHealth.Domain.Shared;
 
 namespace HeartHealth.Domain.ValueObjects
 {
@@ -7,6 +8,18 @@ namespace HeartHealth.Domain.ValueObjects
         public int Systolic { get; }
         public int Diastolic { get; }
         public string Units { get; } = "mm Hg";
+        public Stages Stage
+        {
+            get
+            {
+                if (Systolic >= 180 || Diastolic >= 120) return Stages.Crisis;
+                if (Systolic >= 140 || Diastolic >= 90) return Stages.Stage2;
+                if (Systolic >= 130 || Diastolic >= 80) return Stages.Stage1;
+                if (Systolic >= 120 && Diastolic < 80) return Stages.Elevated;
+
+                return Stages.Normal;
+            }
+        }
 
         public BloodPressure(int systolic, int diastolic)
         {

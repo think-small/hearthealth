@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using FluentAssertions;
 using System;
+using HeartHealth.Domain.Shared;
 
 namespace HeartHealth.Tests.Unit
 {
@@ -31,6 +32,24 @@ namespace HeartHealth.Tests.Unit
             areEqualWithMethod.Should().BeTrue();
             areEqualWithOperator.Should().BeTrue();
             areNotEqualWithOperator.Should().BeFalse();
+        }
+
+        [TestCase(119, 79, Stages.Normal)]
+        [TestCase(121, 79, Stages.Elevated)]
+        [TestCase(121, 81, Stages.Stage1)]
+        [TestCase(131, 79, Stages.Stage1)]
+        [TestCase(132, 82, Stages.Stage1)]
+        [TestCase(141, 70, Stages.Stage2)]
+        [TestCase(119, 91, Stages.Stage2)]
+        [TestCase(143, 93, Stages.Stage2)]
+        [TestCase(181, 70, Stages.Crisis)]
+        [TestCase(119, 121, Stages.Crisis)]
+        [TestCase(147, 131, Stages.Crisis)]
+        public void Get_Approprate_Stage_For_BloodPressure(int systolic, int diastolic, Stages expected)
+        {
+            var bloodPressure = new Domain.ValueObjects.BloodPressure(systolic, diastolic);
+
+            bloodPressure.Stage.Should().Be(expected);
         }
     }
 }
