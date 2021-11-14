@@ -24,8 +24,8 @@ namespace HeartHealth.Domain.Entities
         {
             if (IsSmallSampleSize() || IsNotEvenDistribution()) return;
 
-            var averageSystolic = (int)_measurements.Average(m => m.BloodPressure.Systolic);
-            var averageDiastolic = (int)_measurements.Average(m => m.BloodPressure.Diastolic);
+            var averageSystolic = (int)Math.Round(_measurements.Average(m => m.BloodPressure.Systolic));
+            var averageDiastolic = (int)Math.Round(_measurements.Average(m => m.BloodPressure.Diastolic));
 
             AverageBloodPressure = new BloodPressure(averageSystolic, averageDiastolic);
         }
@@ -61,6 +61,26 @@ namespace HeartHealth.Domain.Entities
             }
 
             return consecutiveDays < requiredConsecutiveDays;
+        }
+
+        /// <summary>
+        /// Adds new measurement and updates AverageBloodPressure.<br />
+        /// Compares the new measurement's BloodPressure.Stage with AverageBloodPressure.Stage. User should confirm delta checks with another measurement.
+        /// </summary>
+        /// <param name="measurement">New measurement submitted from user.</param>
+        /// <returns>
+        /// True if measurement is consistent with AverageBloodPressure.Stage.
+        /// Returns false if measurement is at least one stage higher.
+        /// </returns>
+        public bool AddMeasurement(Measurement measurement)
+        {
+            if (measurement is null) return false;
+
+            _measurements.Add(measurement);
+            if (measurement.BloodPressure.Stage > AverageBloodPressure.Stage) return false;
+
+            CalculateAverageBloodPressure();
+            return true;
         }
     }
 }
