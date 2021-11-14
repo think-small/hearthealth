@@ -45,8 +45,8 @@ namespace HeartHealth.Tests.Unit
 
             var history = new Domain.Entities.History(start, end, measurements);
 
-            history.AverageSystolic.Should().Be(120);
-            history.AverageDiastolic.Should().Be(80);
+            history.AverageBloodPressure.Systolic.Should().Be(120);
+            history.AverageBloodPressure.Diastolic.Should().Be(80);
         }
 
         [Test]
@@ -57,8 +57,7 @@ namespace HeartHealth.Tests.Unit
 
             var history = new Domain.Entities.History(start, end, new List<Measurement>());
 
-            history.AverageSystolic.Should().BeNull();
-            history.AverageDiastolic.Should().BeNull();
+            history.AverageBloodPressure.Should().BeNull();
         }
 
         [Test]
@@ -69,8 +68,7 @@ namespace HeartHealth.Tests.Unit
 
             var history = new Domain.Entities.History(start, end, null);
 
-            history.AverageSystolic.Should().BeNull();
-            history.AverageDiastolic.Should().BeNull();
+            history.AverageBloodPressure.Should().BeNull();
         }
 
         [Test]
@@ -85,13 +83,37 @@ namespace HeartHealth.Tests.Unit
                 {
                     Timestamp = new DateTime(2020, 1, 1),
                     BloodPressure = new Domain.ValueObjects.BloodPressure(120, 80)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 1),
+                    BloodPressure = new Domain.ValueObjects.BloodPressure(110, 90)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 1),
+                    BloodPressure = new Domain.ValueObjects.BloodPressure(117, 72)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 2),
+                    BloodPressure = new Domain.ValueObjects.BloodPressure(121, 77)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 3),
+                    BloodPressure = new Domain.ValueObjects.BloodPressure(127, 81)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 4),
+                    BloodPressure = new Domain.ValueObjects.BloodPressure(119, 77)
                 }
             };
 
             var history = new Domain.Entities.History(start, end, measurements);
 
-            history.AverageSystolic.Should().BeNull();
-            history.AverageDiastolic.Should().BeNull();
+            history.AverageBloodPressure.Should().BeNull();
         }
     }
 }

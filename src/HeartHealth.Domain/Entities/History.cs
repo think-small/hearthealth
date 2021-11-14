@@ -8,8 +8,7 @@ namespace HeartHealth.Domain.Entities
     public class History
     {
         public DateRange DateRange{ get; }
-        public double? AverageSystolic { get; private set; }
-        public double? AverageDiastolic { get; private set; }
+        public BloodPressure AverageBloodPressure { get; set; }
         public IEnumerable<Measurement> Measurements => _measurements.AsReadOnly();
         private List<Measurement> _measurements;
         
@@ -25,8 +24,10 @@ namespace HeartHealth.Domain.Entities
         {
             if (IsSmallSampleSize() || IsNotEvenDistribution()) return;
 
-            AverageSystolic = _measurements.Average(m => m.BloodPressure.Systolic);
-            AverageDiastolic = _measurements.Average(m => m.BloodPressure.Diastolic);
+            var averageSystolic = (int)_measurements.Average(m => m.BloodPressure.Systolic);
+            var averageDiastolic = (int)_measurements.Average(m => m.BloodPressure.Diastolic);
+
+            AverageBloodPressure = new BloodPressure(averageSystolic, averageDiastolic);
         }
 
         private bool IsSmallSampleSize()
