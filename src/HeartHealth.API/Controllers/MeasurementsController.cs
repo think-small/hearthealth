@@ -2,6 +2,7 @@
 using HeartHealth.API.ViewModels;
 using HeartHealth.Application.Features.BloodPressureMeasurement.Commands;
 using HeartHealth.Application.Features.BloodPressureMeasurement.Queries;
+using HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;

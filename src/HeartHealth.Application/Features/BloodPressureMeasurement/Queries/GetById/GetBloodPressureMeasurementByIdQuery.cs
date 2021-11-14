@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System;
 
-namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries
+namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetById
 {
     public class GetBloodPressureMeasurementByIdQuery : IRequest<GetBloodPressureMeasurementByIdResponse>
     {
