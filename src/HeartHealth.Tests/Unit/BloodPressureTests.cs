@@ -2,11 +2,12 @@
 using FluentAssertions;
 using System;
 using HeartHealth.Domain.Shared;
+using HeartHealth.Domain.ValueObjects;
 
 namespace HeartHealth.Tests.Unit
 {
     [TestFixture]
-    public class BloodPressure
+    public class BloodPressureTests
     {
         [TestCase(0, 50)]
         [TestCase(-44, 100)]
@@ -14,7 +15,7 @@ namespace HeartHealth.Tests.Unit
         [TestCase(105, -20)]
         public void Throws_If_Systolic_Or_Diastolic_Are_Less_Than_One(int systolic, int diastolic)
         {
-            Action act = () => new Domain.ValueObjects.BloodPressure(systolic, diastolic);
+            Action act = () => new BloodPressure(systolic, diastolic);
 
             act.Should().Throw<ArgumentException>();
         }
@@ -22,8 +23,8 @@ namespace HeartHealth.Tests.Unit
         [Test]
         public void BloodPressures_Are_Equal_If_Systolic_Diastolic_And_Units_Match()
         {
-            var bloodPressure = new Domain.ValueObjects.BloodPressure(120, 80);
-            var otherBloodPressure = new Domain.ValueObjects.BloodPressure(120, 80);
+            var bloodPressure = new BloodPressure(120, 80);
+            var otherBloodPressure = new BloodPressure(120, 80);
 
             var areEqualWithMethod = bloodPressure.Equals(otherBloodPressure);
             var areEqualWithOperator = bloodPressure == otherBloodPressure;
@@ -47,7 +48,7 @@ namespace HeartHealth.Tests.Unit
         [TestCase(147, 131, Stages.Crisis)]
         public void Get_Approprate_Stage_For_BloodPressure(int systolic, int diastolic, Stages expected)
         {
-            var bloodPressure = new Domain.ValueObjects.BloodPressure(systolic, diastolic);
+            var bloodPressure = new BloodPressure(systolic, diastolic);
 
             bloodPressure.Stage.Should().Be(expected);
         }

@@ -1,16 +1,17 @@
-﻿using FluentAssertions;
+﻿using HeartHealth.Domain.ValueObjects;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 
 namespace HeartHealth.Tests.Unit
 {
     [TestFixture]
-    public class DateRange
+    public class DateRangeTests
     {        
         [Test, TestCaseSource(typeof(InvalidDateTimes), nameof(InvalidDateTimes.Dates))]
         public void Invalid_SqlDateTime_Will_Throw(DateTime start, DateTime end)
         {
-            Action act = () => new Domain.ValueObjects.DateRange(start, end);
+            Action act = () => new DateRange(start, end);
 
             act.Should().Throw<ArgumentException>();
         }
