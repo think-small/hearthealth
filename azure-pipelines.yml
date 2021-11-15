@@ -15,3 +15,5 @@ variables:
 steps:
 - script: dotnet build ./src --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+- script: dotnet test ./src -v n
+  displayName: 'dotnet test ./src -v n'
