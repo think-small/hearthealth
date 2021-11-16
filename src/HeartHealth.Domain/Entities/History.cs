@@ -7,11 +7,13 @@ namespace HeartHealth.Domain.Entities
 {
     public class History
     {
+        public Guid Id { get; set; }
         public DateRange DateRange{ get; }
         public BloodPressure AverageBloodPressure { get; set; }
         public IEnumerable<Measurement> Measurements => _measurements.AsReadOnly();
         private List<Measurement> _measurements;
-        
+
+        public History(){ }
         public History(DateTime start, DateTime end, List<Measurement> measurements)
         {
             DateRange = new DateRange(start, end);

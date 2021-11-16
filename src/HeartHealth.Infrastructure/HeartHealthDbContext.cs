@@ -9,6 +9,7 @@ namespace HeartHealth.Infrastructure
         public HeartHealthDbContext(DbContextOptions<HeartHealthDbContext> options) : base(options) { }
 
         public DbSet<Measurement> Measurements { get; set; }
+        public DbSet<History> Histories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
