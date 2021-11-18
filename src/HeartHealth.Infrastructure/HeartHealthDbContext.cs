@@ -15,19 +15,49 @@ namespace HeartHealth.Infrastructure
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HeartHealthDbContext).Assembly);
 
-            var id = Guid.Parse("11111111-1111-1111-1111-111111111111");
+            var firstId = Guid.NewGuid();
+            var secondId = Guid.NewGuid();
+            var thirdId = Guid.NewGuid();
+            var today = DateTime.UtcNow;
+            var yesterday = DateTime.UtcNow.AddDays(-1);
+            var twoDaysAgo = DateTime.UtcNow.AddDays(-2);
 
             modelBuilder.Entity<Measurement>(m =>
             {
                 m.HasData(new
                 {
-                    Id = id,
-                    Timestamp = DateTime.UtcNow
+                    Id = firstId,
+                    Timestamp = today
                 });
                 m.OwnsOne(m => m.BloodPressure)
                 .HasData(new
                 {
-                    MeasurementId = id, Systolic = 120, Diastolic = 80
+                    MeasurementId = firstId, Systolic = 120, Diastolic = 80
+                });
+            });
+            modelBuilder.Entity<Measurement>(m =>
+            {
+                m.HasData(new
+                {
+                    Id = secondId,
+                    Timestamp = yesterday
+                });
+                m.OwnsOne(m => m.BloodPressure)
+                .HasData(new
+                {
+                    MeasurementId = secondId, Systolic = 112, Diastolic = 77
+                });
+            });
+            modelBuilder.Entity<Measurement>(m => {
+                m.HasData(new
+                {
+                    Id = thirdId,
+                    Timestamp = twoDaysAgo
+                });
+                m.OwnsOne(m => m.BloodPressure)
+                .HasData(new
+                {
+                    MeasurementId = thirdId, Systolic = 118, Diastolic = 81
                 });
             });
         }
