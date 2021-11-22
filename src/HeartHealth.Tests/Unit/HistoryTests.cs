@@ -163,5 +163,53 @@ namespace HeartHealth.Tests.Unit
             sut.AverageBloodPressure.Should().BeEquivalentTo(new BloodPressure(122, 82));
             sut.Measurements.Should().HaveCount(6);
         }
+
+        [Test]
+        public void Adding_Measurement_With_Stage_Higher_Than_Average_Blood_Pressure_Will_Not_Recalculate_Running_Average()
+        {
+            var measurements = new List<Measurement>
+            {
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 1),
+                    BloodPressure = new BloodPressure(120, 80)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 2),
+                    BloodPressure = new BloodPressure(130, 90)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 3),
+                    BloodPressure = new BloodPressure(110, 70)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 4),
+                    BloodPressure = new BloodPressure(140, 100)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 5),
+                    BloodPressure = new BloodPressure(100, 60)
+                }
+            };
+            var newMeasurement = new Measurement
+            {
+                Timestamp = new DateTime(2020, 1, 5),
+                BloodPressure = new BloodPressure(140, 120)
+            };
+
+            var start = new DateTime(2020, 1, 1);
+            var end = new DateTime(2020, 1, 5);
+            var sut = new History(start, end, measurements);
+            var originalAverageBloodPressure = sut.AverageBloodPressure;
+
+            var wasWithinRunningAverage = sut.AddMeasurement(newMeasurement);
+
+            wasWithinRunningAverage.Should().BeFalse();
+            originalAverageBloodPressure.Should().BeEquivalentTo(sut.AverageBloodPressure);
+        }
     }
 }
