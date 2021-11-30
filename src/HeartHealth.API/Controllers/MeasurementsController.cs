@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HeartHealth.API.ViewModels;
 using HeartHealth.Application.Features.BloodPressureMeasurement.Commands;
-using HeartHealth.Application.Features.BloodPressureMeasurement.Queries;
+using HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetByDateRange;
 using HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +49,29 @@ namespace HeartHealth.API.Controllers
 
             var url = Url.Link("GetMeasurementById", new { id = response.Id});
             return Created(url, _mapper.Map<MeasurementVM>(response));
+        }
+
+        [HttpGet]
+        [Route("{start}/{end}", Name = "GetMeasurementsInDateRange")]
+        public async Task<ActionResult> GetByDateRange(string start, string end)
+        {
+            var request = new GetBloodPressureMeasurementByDateRangeQuery();
+            try
+            {
+                request.Start = DateTime.Parse(start);
+                request.End = DateTime.Parse(end);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest("Start and end date are required.");
+            }
+            catch (FormatException)
+            {
+                return BadRequest("Format dates as mm/dd/yyyy");
+            }
+            
+            var response = await _mediatr.Send(request);
+            return Ok(response.Measurements);
         }
     }
 }

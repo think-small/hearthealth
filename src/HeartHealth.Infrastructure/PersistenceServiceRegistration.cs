@@ -13,6 +13,8 @@ namespace HeartHealth.Infrastructure
         {
             services.AddDbContext<HeartHealthDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("HeartHealthConnectionString")));
             services.AddScoped<IBaseRepository<Measurement>, BaseRepository<Measurement>>();
+            services.AddScoped<IHistoriesRepository, HistoriesRepository>();
+
             return services;
         }
     }
