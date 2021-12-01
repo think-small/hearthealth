@@ -6,7 +6,7 @@ namespace HeartHealth.Application.Contracts.Persistence
 {
     public interface IHistoriesRepository
     {
-        Task<History> GetBetween(DateTime start, DateTime end);
-        Task Save(History history);
+        Task<History> GetBetweenAsync(DateTime start, DateTime end);
+        Task SaveAsync(History history);
     }
 }

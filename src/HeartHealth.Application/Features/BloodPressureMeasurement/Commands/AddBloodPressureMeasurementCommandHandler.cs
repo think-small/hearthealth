@@ -33,9 +33,9 @@ namespace HeartHealth.Application.Features.BloodPressureMeasurement.Commands
                     BloodPressure = new BloodPressure(request.Systolic, request.Diastolic)
                 };
                 
-                var history = await _historiesRepository.GetBetween(weekAgo, today);
+                var history = await _historiesRepository.GetBetweenAsync(weekAgo, today);
                 var isRepeatNeeded = history.AddMeasurement(measurement);
-                await _historiesRepository.Save(history);
+                await _historiesRepository.SaveAsync(history);
 
                 response.IsRepeatNeeded = isRepeatNeeded;
                 response.Measurement = _mapper.Map<MeasurementDto>(measurement);

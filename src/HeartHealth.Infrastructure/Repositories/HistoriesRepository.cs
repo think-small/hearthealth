@@ -16,7 +16,7 @@ namespace HeartHealth.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<History> GetBetween(DateTime start, DateTime end)
+        public async Task<History> GetBetweenAsync(DateTime start, DateTime end)
         {
             var dateRange = new DateRange(start, end);
             var measurements = await _context.Measurements
@@ -26,7 +26,7 @@ namespace HeartHealth.Infrastructure.Repositories
             return new History(start, end, measurements);
         }
 
-        public async Task Save(History history)
+        public async Task SaveAsync(History history)
         {
             foreach (var measurement in history.Measurements)
             {

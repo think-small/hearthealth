@@ -19,7 +19,7 @@ namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetB
         }
         public async Task<GetBloodPressureMeasurementByDateRangeResponse> Handle(GetBloodPressureMeasurementByDateRangeQuery request, CancellationToken cancellationToken)
         {
-            var history = await _historiesRepository.GetBetween(request.Start, request.End);
+            var history = await _historiesRepository.GetBetweenAsync(request.Start, request.End);
             var measurements = _mapper.Map<List<MeasurementDto>>(history.Measurements).AsReadOnly();
             return new GetBloodPressureMeasurementByDateRangeResponse { Measurements = measurements };
         }
