@@ -4,6 +4,7 @@ using HeartHealth.Domain.ValueObjects;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HeartHealth.Tests.Unit
 {
@@ -210,6 +211,102 @@ namespace HeartHealth.Tests.Unit
 
             wasWithinRunningAverage.Should().BeFalse();
             originalAverageBloodPressure.Should().BeEquivalentTo(sut.AverageBloodPressure);
+        }
+
+        [Test]
+        public void Adding_Measurement_With_Stage_Higher_Than_Average_Blood_Pressure_Will_Mark_It_As_Requiring_Verification()
+        {
+            var measurements = new List<Measurement>
+            {
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 1),
+                    BloodPressure = new BloodPressure(120, 80)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 2),
+                    BloodPressure = new BloodPressure(130, 90)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 3),
+                    BloodPressure = new BloodPressure(110, 70)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 4),
+                    BloodPressure = new BloodPressure(140, 100)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 5),
+                    BloodPressure = new BloodPressure(100, 60)
+                }
+            };
+            var newMeasurement = new Measurement
+            {
+                Timestamp = new DateTime(2020, 1, 5),
+                BloodPressure = new BloodPressure(130, 85)
+            };
+            var start = new DateTime(2020, 1, 1);
+            var end = new DateTime(2020, 1, 5);
+            var sut = new History(start, end, measurements);
+
+            sut.AddMeasurement(newMeasurement);
+
+            var addedMeasurement = sut.GetMeasurementsBy(newMeasurement.Timestamp)
+                                      .FirstOrDefault(m => m == newMeasurement);
+
+            addedMeasurement.RequiresVerification.Should().BeTrue();
+        }
+
+        [Test]
+        public void Adding_Measurement_With_Stage_Equal_To_Average_Blood_Pressure_Will_Not_Mark_It_As_Requiring_Verification()
+        {
+            var measurements = new List<Measurement>
+            {
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 1),
+                    BloodPressure = new BloodPressure(120, 80)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 2),
+                    BloodPressure = new BloodPressure(130, 90)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 3),
+                    BloodPressure = new BloodPressure(110, 70)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 4),
+                    BloodPressure = new BloodPressure(140, 100)
+                },
+                new Measurement
+                {
+                    Timestamp = new DateTime(2020, 1, 5),
+                    BloodPressure = new BloodPressure(100, 60)
+                }
+            };
+            var newMeasurement = new Measurement
+            {
+                Timestamp = new DateTime(2020, 1, 5),
+                BloodPressure = new BloodPressure(90, 75)
+            };
+            var start = new DateTime(2020, 1, 1);
+            var end = new DateTime(2020, 1, 5);
+            var sut = new History(start, end, measurements);
+
+            sut.AddMeasurement(newMeasurement);
+
+            var addedMeasurement = sut.GetMeasurementsBy(newMeasurement.Timestamp)
+                                      .FirstOrDefault(m => m == newMeasurement);
+
+            addedMeasurement.RequiresVerification.Should().BeFalse();
         }
     }
 }

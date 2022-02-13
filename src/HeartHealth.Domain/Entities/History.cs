@@ -78,11 +78,32 @@ namespace HeartHealth.Domain.Entities
         {
             if (measurement is null) return false;
 
+            DeltaCheckFor(measurement);
             _measurements.Add(measurement);
             if (measurement.BloodPressure.Stage > AverageBloodPressure.Stage) return false;
 
             CalculateAverageBloodPressure();
             return true;
+        }
+
+        //  DeltaCheck should only apply if a running average has been established.
+        private void DeltaCheckFor(Measurement measurement)
+        {
+            var recentMeasurement = GetMeasurementsBy(DateRange).Last();
+            measurement.RequiresVerification = AverageBloodPressure != null
+                                            && recentMeasurement.BloodPressure.Stage < measurement.BloodPressure.Stage;
+        }
+
+        public IEnumerable<Measurement> GetMeasurementsBy(DateTime dateTime)
+        {
+            return _measurements.Where(m => m.Timestamp.Date == dateTime.Date)
+                                .OrderBy(m => m.Timestamp);
+        }
+
+        public IEnumerable<Measurement> GetMeasurementsBy(DateRange dateRange)
+        {
+            return _measurements.Where(m => dateRange.Has(m.Timestamp))
+                                .OrderBy(m => m.Timestamp);                         
         }
     }
 }
