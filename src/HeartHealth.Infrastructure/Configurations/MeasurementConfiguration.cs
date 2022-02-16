@@ -12,6 +12,10 @@ namespace HeartHealth.Infrastructure.Configurations
                 .IsRequired()
                 .HasColumnType("smalldatetime");
 
+            builder.Property(m => m.RequiresVerification)
+                .IsRequired()
+                .HasColumnType("bit");
+
             builder.Property(m => m.Id)
                 .HasColumnType("varchar")
                 .HasMaxLength(36);

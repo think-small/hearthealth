@@ -27,12 +27,15 @@ namespace HeartHealth.Infrastructure
                 m.HasData(new
                 {
                     Id = firstId,
-                    Timestamp = today
+                    Timestamp = today,
+                    RequiresVerification = false
                 });
                 m.OwnsOne(m => m.BloodPressure)
                 .HasData(new
                 {
-                    MeasurementId = firstId, Systolic = 120, Diastolic = 80
+                    MeasurementId = firstId, 
+                    Systolic = 120, 
+                    Diastolic = 80
                 });
             });
             modelBuilder.Entity<Measurement>(m =>
@@ -40,24 +43,30 @@ namespace HeartHealth.Infrastructure
                 m.HasData(new
                 {
                     Id = secondId,
-                    Timestamp = yesterday
+                    Timestamp = yesterday,
+                    RequiresVerification = false
                 });
                 m.OwnsOne(m => m.BloodPressure)
                 .HasData(new
                 {
-                    MeasurementId = secondId, Systolic = 112, Diastolic = 77
+                    MeasurementId = secondId, 
+                    Systolic = 112, 
+                    Diastolic = 77
                 });
             });
             modelBuilder.Entity<Measurement>(m => {
                 m.HasData(new
                 {
                     Id = thirdId,
-                    Timestamp = twoDaysAgo
+                    Timestamp = twoDaysAgo,
+                    RequiresVerification = false
                 });
                 m.OwnsOne(m => m.BloodPressure)
                 .HasData(new
                 {
-                    MeasurementId = thirdId, Systolic = 118, Diastolic = 81
+                    MeasurementId = thirdId, 
+                    Systolic = 118, 
+                    Diastolic = 81
                 });
             });
         }

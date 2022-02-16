@@ -47,7 +47,7 @@ namespace HeartHealth.Domain.ValueObjects
 
         public static bool operator != (BloodPressure pressure, BloodPressure otherPressure)
         {
-            return !pressure.Equals(otherPressure);
+            return !(pressure == otherPressure);
         }
 
         public override int GetHashCode()

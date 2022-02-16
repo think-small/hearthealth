@@ -89,9 +89,10 @@ namespace HeartHealth.Domain.Entities
         //  DeltaCheck should only apply if a running average has been established.
         private void DeltaCheckFor(Measurement measurement)
         {
+            if (AverageBloodPressure is null) return;
+
             var recentMeasurement = GetMeasurementsBy(DateRange).Last();
-            measurement.RequiresVerification = AverageBloodPressure != null
-                                            && recentMeasurement.BloodPressure.Stage < measurement.BloodPressure.Stage;
+            measurement.RequiresVerification = recentMeasurement.BloodPressure.Stage < measurement.BloodPressure.Stage;
         }
 
         public IEnumerable<Measurement> GetMeasurementsBy(DateTime dateTime)
