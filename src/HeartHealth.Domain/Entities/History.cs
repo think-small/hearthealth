@@ -74,25 +74,40 @@ namespace HeartHealth.Domain.Entities
         /// True if measurement is consistent with AverageBloodPressure.Stage.
         /// Returns false if measurement is at least one stage higher.
         /// </returns>
-        public bool AddMeasurement(Measurement measurement)
+        public void AddMeasurement(Measurement measurement)
         {
-            if (measurement is null) return false;
+            if (measurement is null) return;
 
-            DeltaCheckFor(measurement);
-            _measurements.Add(measurement);
-            if (measurement.BloodPressure.Stage > AverageBloodPressure.Stage) return false;
-
-            CalculateAverageBloodPressure();
-            return true;
+            Add(measurement);
+            RecalculateAverageBloodPressureIncluding(measurement);
         }
 
+        private void Add(Measurement measurement)
+        {
+            DeltaCheckFor(measurement);
+            _measurements.Add(measurement);
+        }
         //  DeltaCheck should only apply if a running average has been established.
         private void DeltaCheckFor(Measurement measurement)
         {
             if (AverageBloodPressure is null) return;
 
             var recentMeasurement = GetMeasurementsBy(DateRange).Last();
-            measurement.RequiresVerification = recentMeasurement.BloodPressure.Stage < measurement.BloodPressure.Stage;
+            measurement.RequiresVerification = IsVerificationRequiredFor(recentMeasurement, measurement);
+        }
+
+        private void RecalculateAverageBloodPressureIncluding(Measurement measurement)
+        {
+            if (AverageBloodPressure is null
+                || measurement.BloodPressure.Stage <= AverageBloodPressure.Stage)
+            {
+                CalculateAverageBloodPressure();
+            }           
+        }
+
+        private bool IsVerificationRequiredFor(Measurement previous, Measurement current)
+        {
+            return previous.BloodPressure.Stage < current.BloodPressure.Stage && current.BloodPressure.Stage > AverageBloodPressure.Stage;
         }
 
         public IEnumerable<Measurement> GetMeasurementsBy(DateTime dateTime)

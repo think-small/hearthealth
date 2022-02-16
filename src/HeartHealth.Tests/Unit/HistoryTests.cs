@@ -158,9 +158,9 @@ namespace HeartHealth.Tests.Unit
                 BloodPressure = new BloodPressure(129, 89)
             };
 
-            var expected = sut.AddMeasurement(newMeasurement);
+            sut.AddMeasurement(newMeasurement);
 
-            expected.Should().BeTrue();
+            newMeasurement.RequiresVerification.Should().BeFalse();
             sut.AverageBloodPressure.Should().BeEquivalentTo(new BloodPressure(122, 82));
             sut.Measurements.Should().HaveCount(6);
         }
@@ -207,9 +207,9 @@ namespace HeartHealth.Tests.Unit
             var sut = new History(start, end, measurements);
             var originalAverageBloodPressure = sut.AverageBloodPressure;
 
-            var wasWithinRunningAverage = sut.AddMeasurement(newMeasurement);
+            sut.AddMeasurement(newMeasurement);
 
-            wasWithinRunningAverage.Should().BeFalse();
+            newMeasurement.RequiresVerification.Should().BeTrue();
             originalAverageBloodPressure.Should().BeEquivalentTo(sut.AverageBloodPressure);
         }
 
@@ -247,7 +247,7 @@ namespace HeartHealth.Tests.Unit
             var newMeasurement = new Measurement
             {
                 Timestamp = new DateTime(2020, 1, 5),
-                BloodPressure = new BloodPressure(130, 85)
+                BloodPressure = new BloodPressure(140, 85)
             };
             var start = new DateTime(2020, 1, 1);
             var end = new DateTime(2020, 1, 5);
