@@ -8,6 +8,5 @@ namespace HeartHealth.Application.Features.BloodPressureMeasurement.Commands
     {
         public Guid Id { get; set; }
         public MeasurementDto Measurement { get; set; }
-        public bool IsRepeatNeeded { get; set; }
     }
 }

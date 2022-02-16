@@ -34,10 +34,9 @@ namespace HeartHealth.Application.Features.BloodPressureMeasurement.Commands
                 };
                 
                 var history = await _historiesRepository.GetBetweenAsync(weekAgo, today);
-                var isRepeatNeeded = history.AddMeasurement(measurement);
+                history.AddMeasurement(measurement);
                 await _historiesRepository.SaveAsync(history);
 
-                response.IsRepeatNeeded = isRepeatNeeded;
                 response.Measurement = _mapper.Map<MeasurementDto>(measurement);
                 response.Id = measurement.Id;
             }

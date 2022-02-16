@@ -7,5 +7,6 @@ namespace HeartHealth.Application.Features.BloodPressureMeasurement.Shared.Model
     {
         public DateTime Timestamp { get; set; }
         public BloodPressure BloodPressure { get; set; }
+        public bool RequiresVerification { get; set; }
     }
 }

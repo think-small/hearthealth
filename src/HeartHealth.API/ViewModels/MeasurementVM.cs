@@ -8,5 +8,6 @@ namespace HeartHealth.API.ViewModels
         public int Systolic { get; set; }
         public int Diastolic { get; set; }
         public string Units { get; set; }
+        public bool RequiresVerification { get; set; }
     }
 }
