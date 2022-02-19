@@ -82,18 +82,33 @@ namespace HeartHealth.Domain.Entities
             RecalculateAverageBloodPressureIncluding(measurement);
         }
 
-        private void Add(Measurement measurement)
+        private void Add(Measurement current)
         {
-            DeltaCheckFor(measurement);
-            _measurements.Add(measurement);
+            var previous = GetMeasurementsBy(DateRange).Last();
+
+            if (previous.RequiresVerification)
+            {
+                VerifyResultFor(previous, current);
+            }
+
+            DeltaCheckFor(previous, current);
+            _measurements.Add(current);
         }
+
+        private void VerifyResultFor(Measurement previous, Measurement current)
+        {
+            if (current.BloodPressure.Stage == previous.BloodPressure.Stage)
+            {
+                previous.RequiresVerification = false;
+            }
+        }
+
         //  DeltaCheck should only apply if a running average has been established.
-        private void DeltaCheckFor(Measurement measurement)
+        private void DeltaCheckFor(Measurement previous, Measurement current)
         {
             if (AverageBloodPressure is null) return;
 
-            var recentMeasurement = GetMeasurementsBy(DateRange).Last();
-            measurement.RequiresVerification = IsVerificationRequiredFor(recentMeasurement, measurement);
+            current.RequiresVerification = IsVerificationRequiredFor(previous, current);
         }
 
         private void RecalculateAverageBloodPressureIncluding(Measurement measurement)
