@@ -1,7 +1,7 @@
 ﻿using HeartHealth.Application.Features.BloodPressureMeasurement.Shared.Models;
 using HeartHealth.Application.Responses;
 
-namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetById
+namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries
 {
     public class GetBloodPressureMeasurementByIdResponse : BaseResponse
     {

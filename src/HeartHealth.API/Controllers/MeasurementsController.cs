@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using HeartHealth.API.ViewModels;
 using HeartHealth.Application.Features.BloodPressureMeasurement.Commands;
-using HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetByDateRange;
-using HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetById;
+using HeartHealth.Application.Features.BloodPressureMeasurement.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;

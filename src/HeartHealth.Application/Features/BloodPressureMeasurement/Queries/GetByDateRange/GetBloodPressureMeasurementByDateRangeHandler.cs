@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetByDateRange
+namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries
 {
     class GetBloodPressureMeasurementByDateRangeHandler : IRequestHandler<GetBloodPressureMeasurementByDateRangeQuery, GetBloodPressureMeasurementByDateRangeResponse>
     {

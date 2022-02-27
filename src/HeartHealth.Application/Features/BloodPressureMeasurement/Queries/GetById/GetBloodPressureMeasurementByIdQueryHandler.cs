@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries.GetById
+namespace HeartHealth.Application.Features.BloodPressureMeasurement.Queries
 {
     public class GetBloodPressureMeasurementByIdQueryHandler : IRequestHandler<GetBloodPressureMeasurementByIdQuery, GetBloodPressureMeasurementByIdResponse>
     {
