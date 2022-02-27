@@ -73,5 +73,20 @@ namespace HeartHealth.API.Controllers
             var response = await _mediatr.Send(request);
             return Ok(response.Measurements);
         }
+
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<ActionResult> DeleteById(Guid id)
+        {
+            var request = new DeleteBloodPressureMeasurementByIdCommand { Id = id };
+            var response = await _mediatr.Send(request);
+            
+            if (response.WasSuccessful == false)
+            {
+                return BadRequest(response.ValidationErrors);
+            }
+
+            return Ok();
+        }
     }
 }
